@@ -2,7 +2,32 @@ library(shiny)
 library(plotly)
 
 ui <- fluidPage(
-  
+  tags$head(
+    tags$style(HTML("
+    
+    .custom-box {
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .cases-box {
+      background: #e74c3c;
+    }
+
+    .deaths-box {
+      background: #2c3e50;
+    }
+
+    .active-box {
+      background: #27ae60;
+    }
+
+  "))
+  ),
   titlePanel("Disease Dashboard"),
   
   sidebarLayout(
@@ -24,7 +49,11 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      
+      fluidRow(
+        column(4, uiOutput("casesBox")),
+        column(4, uiOutput("deathsBox")),
+        column(4, uiOutput("activeBox"))
+      ),
       tabsetPanel(
         
         tabPanel("Overview",

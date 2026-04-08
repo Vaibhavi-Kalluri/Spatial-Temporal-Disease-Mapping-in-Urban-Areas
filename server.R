@@ -17,6 +17,43 @@ server <- function(input, output) {
   })
   
   # KPI
+  # KPI CARDS
+  
+  output$casesBox <- renderUI({
+    div(class = "custom-box cases-box",
+        
+        icon("virus", style = "font-size: 30px;"),
+        br(),
+        
+        format(sum(filtered_data()$Cases, na.rm = TRUE), big.mark = ","),
+        br(),
+        span("Total Cases", style = "font-size: 16px;")
+    )
+  })
+  
+  output$deathsBox <- renderUI({
+    div(class = "custom-box deaths-box",
+        
+        icon("skull-crossbones", style = "font-size: 30px;"),
+        br(),
+        
+        format(sum(filtered_data()$Deaths, na.rm = TRUE), big.mark = ","),
+        br(),
+        span("Total Deaths", style = "font-size: 16px;")
+    )
+  })
+  
+  output$activeBox <- renderUI({
+    div(class = "custom-box active-box",
+        
+        icon("heartbeat", style = "font-size: 30px;"),
+        br(),
+        
+        format(sum(filtered_data()$Cases - filtered_data()$Deaths, na.rm = TRUE), big.mark = ","),
+        br(),
+        span("Estimated Active", style = "font-size: 16px;")
+    )
+  })
   output$totalCases <- renderText({
     format(sum(filtered_data()$Cases, na.rm = TRUE), big.mark = ",")
   })
