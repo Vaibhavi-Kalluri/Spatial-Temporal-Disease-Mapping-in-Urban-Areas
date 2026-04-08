@@ -9,8 +9,7 @@ predict_future <- function(data) {
   )
   
   future$Predicted_Cases <- predict(model, future)
-  
-  # ✅ FIX: Remove negative values
+
   future$Predicted_Cases <- ifelse(
     future$Predicted_Cases < 0,
     0,

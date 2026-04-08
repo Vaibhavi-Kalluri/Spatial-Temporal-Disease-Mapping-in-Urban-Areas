@@ -15,10 +15,6 @@ server <- function(input, output) {
         Year <= input$yearRange[2]
       )
   })
-  
-  # KPI
-  # KPI CARDS
-  
   output$casesBox <- renderUI({
     div(class = "custom-box cases-box",
         
@@ -61,7 +57,6 @@ server <- function(input, output) {
   output$totalDeaths <- renderText({
     format(sum(filtered_data()$Deaths, na.rm = TRUE), big.mark = ",")
   })
-  # STATE-WISE SUMMARY TABLE
   output$stateSummaryTable <- renderTable({
     
     data <- filtered_data()
@@ -73,8 +68,6 @@ server <- function(input, output) {
         Total_Deaths = sum(Deaths, na.rm = TRUE),
         .groups = "drop"
       )
-    
-    # Add GRAND TOTAL row
     total_row <- data.frame(
       State = "TOTAL",
       Total_Cases = sum(summary$Total_Cases),
@@ -85,7 +78,6 @@ server <- function(input, output) {
     
     return(final_table)
   })
-  # DISEASE-WISE SUMMARY TABLE
   output$diseaseSummaryTable <- renderTable({
     
     data <- filtered_data()
@@ -97,8 +89,7 @@ server <- function(input, output) {
         Total_Deaths = sum(Deaths, na.rm = TRUE),
         .groups = "drop"
       )
-    
-    # Add TOTAL row
+
     total_row <- data.frame(
       Disease = "TOTAL",
       Total_Cases = sum(summary$Total_Cases),
@@ -109,7 +100,7 @@ server <- function(input, output) {
     
     return(final_table)
   })
-  # INTERACTIVE GRAPHS
+
   output$casesPlot <- renderPlotly({
     plot_cases(filtered_data())
   })
@@ -118,7 +109,6 @@ server <- function(input, output) {
     plot_deaths(filtered_data())
   })
   
-  # STATE ANALYSIS (TOP 5 HIGHLIGHT)
   output$stateMap <- renderPlotly({
     
     state_data <- state_analysis(filtered_data())
@@ -134,7 +124,6 @@ server <- function(input, output) {
             hoverinfo = "text")
   })
   
-  # COMPARISON GRAPH
   output$comparePlot <- renderPlotly({
     
     comp_data <- filtered_data() %>%
@@ -147,8 +136,7 @@ server <- function(input, output) {
             color = ~Disease,
             type = 'bar')
   })
-  
-  # PREDICTION
+
   output$predTable <- renderTable({
     predict_future(filtered_data())
   })
